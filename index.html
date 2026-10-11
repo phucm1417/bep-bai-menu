@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#347f73">
+  <title>Bếp Bài — Menu chính</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --teal: #347f73;
+      --teal-dark: #245b53;
+      --paper: #f0e4cf;
+      --ink: #41413c;
+      --orange: #e58a68;
+      --shadow: 0 12px 0 rgba(41, 67, 60, .22), 0 22px 35px rgba(27, 49, 44, .22);
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      overflow-x: hidden;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 50% 4%, rgba(255,255,255,.2), transparent 38%),
+        var(--teal);
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("model game/UI va bieu tuong/hoa_tiet_nen_khu_vuon.png") repeat;
+      background-size: 170px 170px;
+      opacity: .18;
+      pointer-events: none;
+    }
+    button { font: inherit; }
+    .frame {
+      position: relative;
+      width: min(100% - 32px, 980px);
+      min-height: 650px;
+      margin: 24px 0;
+      padding: clamp(20px, 5vw, 50px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 7px solid #f4ead8;
+      border-radius: 30px;
+      background:
+        linear-gradient(rgba(240,228,207,.93), rgba(240,228,207,.93)),
+        url("model game/UI va bieu tuong/hoa_tiet_nen_khu_vuon.png") center/cover;
+      box-shadow: var(--shadow);
+    }
+    .frame::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 2px dashed rgba(91, 78, 64, .25);
+      border-radius: 19px;
+      pointer-events: none;
+    }
+    .brand { position: relative; z-index: 1; text-align: center; }
+    .logo {
+      display: block;
+      width: min(520px, 80vw);
+      max-height: 240px;
+      object-fit: contain;
+      margin: 0 auto -2px;
+      border-radius: 24px;
+      filter: drop-shadow(0 8px 0 rgba(50, 63, 54, .12));
+    }
+    .subtitle {
+      margin: 4px 0 0;
+      color: var(--teal-dark);
+      font-size: clamp(13px, 2vw, 17px);
+      font-weight: 900;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    .menu {
+      z-index: 1;
+      width: min(710px, 100%);
+      margin: 28px 0 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(10px, 2.5vw, 22px);
+    }
+    .menu-button {
+      position: relative;
+      padding: 0;
+      border: 0;
+      border-radius: 18px;
+      background: transparent;
+      cursor: pointer;
+      transition: transform .16s ease, filter .16s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .menu-button:hover, .menu-button:focus-visible {
+      transform: translateY(-7px) rotate(-1deg);
+      filter: drop-shadow(0 10px 0 rgba(52, 127, 115, .2));
+      outline: none;
+    }
+    .menu-button:active { transform: translateY(-1px) scale(.98); }
+    .menu-button img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 0.84;
+      object-fit: cover;
+      border: 4px solid #fff9eb;
+      border-radius: 17px;
+      box-shadow: 0 5px 0 rgba(57, 52, 45, .45);
+      background: #d8c2a7;
+    }
+    .menu-label {
+      display: block;
+      margin-top: 12px;
+      color: var(--ink);
+      font-size: clamp(11px, 1.6vw, 15px);
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .hint {
+      z-index: 1;
+      margin: 8px 0 0;
+      color: #716b5e;
+      font-size: 13px;
+      text-align: center;
+    }
+    .status {
+      z-index: 1;
+      min-height: 26px;
+      margin: 4px 0 0;
+      color: var(--teal-dark);
+      font-size: 14px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .modal-backdrop {
+      position: fixed;
+      z-index: 5;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 18px;
+      background: rgba(24, 46, 41, .66);
+    }
+    .modal-backdrop.open { display: grid; }
+    .modal {
+      width: min(440px, 100%);
+      padding: 28px;
+      border: 5px solid #fff6e5;
+      border-radius: 24px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .modal h2 { margin: 0 0 10px; color: var(--teal-dark); }
+    .modal p { line-height: 1.55; }
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(65,65,60,.18);
+      text-align: left;
+      font-weight: 800;
+    }
+    .setting-row img { width: 68px; height: 76px; object-fit: cover; border-radius: 8px; }
+    .action {
+      margin-top: 18px;
+      padding: 11px 24px;
+      border: 3px solid #fff4dd;
+      border-radius: 12px;
+      background: var(--teal);
+      color: white;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 0 var(--teal-dark);
+    }
+    .action:hover { background: var(--teal-dark); }
+    @media (max-width: 640px) {
+      .frame { min-height: 560px; padding: 32px 20px; }
+      .menu { grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(390px, 100%); gap: 18px 28px; }
+      .menu-button img { aspect-ratio: 1; }
+      .logo { max-height: 175px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <main class="frame" aria-label="Menu chính Bếp Bài">
+    <header class="brand">
+      <img class="logo" src="model game/UI va bieu tuong/logo_trang_chu_cookard.png" alt="Logo Cookard">
+      <p class="subtitle">Bếp bài · Quán nhỏ, món ngon</p>
+    </header>
+
+    <nav class="menu" aria-label="Menu chính">
+      <button class="menu-button" data-action="start" aria-label="Bắt đầu">
+        <img src="model game/UI va bieu tuong/nut_bat_dau.png" alt=""><span class="menu-label">Bắt đầu</span>
+      </button>
+      <button class="menu-button" data-action="settings" aria-label="Cài đặt">
+        <img src="model game/UI va bieu tuong/nut_cai_dat.png" alt=""><span class="menu-label">Cài đặt</span>
+      </button>
+      <button class="menu-button" data-action="wishlist" aria-label="Sổ tay món">
+        <img src="model game/UI va bieu tuong/nut_danh_sach_yeu_thich.png" alt=""><span class="menu-label">Sổ tay món</span>
+      </button>
+      <button class="menu-button" data-action="quit" aria-label="Thoát">
+        <img src="model game/UI va bieu tuong/nut_thoat.png" alt=""><span class="menu-label">Thoát</span>
+      </button>
+    </nav>
+
+    <p class="status" id="status" aria-live="polite"></p>
+    <p class="hint">Chọn một thẻ để vào bếp</p>
+  </main>
+
+  <div class="modal-backdrop" id="modalBackdrop" role="presentation">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h2 id="modalTitle"></h2>
+      <div id="modalContent"></div>
+      <button class="action" id="closeModal">Đóng</button>
+    </section>
+  </div>
+  <script>
+    const backdrop = document.querySelector('#modalBackdrop');
+    const title = document.querySelector('#modalTitle');
+    const content = document.querySelector('#modalContent');
+    const status = document.querySelector('#status');
+    const closeModal = () => backdrop.classList.remove('open');
+    const openModal = (heading, body) => {
+      title.textContent = heading;
+      content.innerHTML = body;
+      backdrop.classList.add('open');
+      document.querySelector('#closeModal').focus();
+    };
+    document.querySelectorAll('.menu-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const action = button.dataset.action;
+        if (action === 'start') {
+          openModal('Bếp đã sẵn sàng!', '<p>Hãy chuẩn bị nguyên liệu, kết hợp thẻ và phục vụ vị khách đầu tiên.</p><p><strong>Chúc bạn nấu vui vẻ!</strong></p>');
+        } else if (action === 'settings') {
+          openModal('Cài đặt', '<div class="setting-row"><span>Âm thanh</span><img src="model game/UI va bieu tuong/nut_am_thanh.png" alt="Biểu tượng âm thanh"></div><div class="setting-row"><span>Ngôn ngữ</span><img src="model game/UI va bieu tuong/nut_ngon_ngu.png" alt="Biểu tượng ngôn ngữ"></div><p>Giao diện hiện đang dùng tiếng Việt.</p>');
+        } else if (action === 'wishlist') {
+          openModal('Sổ tay món', '<p>Các công thức và món ăn bạn khám phá sẽ được ghi lại tại đây.</p><p>Hiện chưa có công thức nào được lưu.</p>');
+        } else {
+          openModal('Hẹn gặp lại!', '<p>Bạn có thể đóng tab trình duyệt để thoát khỏi trò chơi.</p>');
+        }
+      });
+    });
+    document.querySelector('#closeModal').addEventListener('click', closeModal);
+    backdrop.addEventListener('click', event => { if (event.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') closeModal(); });
+  </script>
+</body>
+</html>

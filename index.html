@@ -185,6 +185,163 @@
       box-shadow: 0 4px 0 var(--teal-dark);
     }
     .action:hover { background: var(--teal-dark); }
+    .hidden { display: none !important; }
+    .game-screen {
+      --card-height: clamp(132px, 17vh, 174px);
+      position: fixed;
+      z-index: 4;
+      inset: 0;
+      display: none;
+      overflow: hidden;
+      background-color: #347f73;
+      background-image: url("model game/UI va bieu tuong/hoa_tiet_nen_khu_vuon.png");
+      background-repeat: repeat;
+      background-size: 190px 190px;
+      touch-action: none;
+    }
+    .game-screen.active { display: block; }
+    .game-screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      box-shadow: inset 0 0 0 8px rgba(246, 236, 217, .82), inset 0 0 0 13px rgba(62, 61, 54, .58);
+    }
+    .mission-panel {
+      position: absolute;
+      z-index: 2;
+      top: 54px;
+      left: 16px;
+      width: clamp(190px, 20vw, 300px);
+      height: auto;
+      max-height: calc(100vh - 72px);
+      object-fit: contain;
+      pointer-events: none;
+      filter: drop-shadow(2px 4px 2px rgba(31, 48, 43, .24));
+    }
+    .game-toolbar {
+      position: absolute;
+      z-index: 20;
+      top: 18px;
+      right: 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .game-name, .back-to-menu {
+      padding: 10px 15px;
+      border: 3px solid #fff7e7;
+      border-radius: 12px;
+      background: rgba(240, 228, 207, .95);
+      color: #315d53;
+      font-weight: 900;
+      box-shadow: 0 4px 0 rgba(48, 54, 47, .55);
+    }
+    .back-to-menu { cursor: pointer; }
+    .back-to-menu:hover, .back-to-menu:focus-visible { background: #fff7e7; }
+    .ingredient-stack {
+      position: absolute;
+      top: 17vh;
+      left: 43vw;
+      width: calc(var(--card-height) * .82);
+      height: calc(var(--card-height) * 2.5);
+    }
+    .game-card {
+      position: absolute;
+      z-index: 1;
+      display: block;
+      width: calc(var(--card-height) * .82);
+      height: var(--card-height);
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
+      touch-action: none;
+      cursor: grab;
+      filter: drop-shadow(2px 5px 2px rgba(33, 41, 37, .28));
+      transition: filter .12s ease;
+    }
+    .game-card:active, .game-card.dragging {
+      cursor: grabbing;
+      filter: drop-shadow(5px 10px 5px rgba(24, 36, 31, .38));
+    }
+    .game-card.linked {
+      outline: 2px solid rgba(255, 247, 231, .92);
+      outline-offset: 1px;
+    }
+    .ingredient-stack .game-card:nth-child(1) { top: 0; left: 0; z-index: 1; }
+    .ingredient-stack .game-card:nth-child(2) { top: calc(var(--card-height) * .75); left: 0; z-index: 2; }
+    .ingredient-stack .game-card:nth-child(3) { top: calc(var(--card-height) * 1.5); left: 0; z-index: 3; }
+    .game-card.whisk { left: 35vw; top: 66vh; }
+    .game-card.pump { left: 68vw; top: 24vh; }
+    .pump-progress {
+      position: fixed;
+      z-index: 1000;
+      height: 9px;
+      border: 1px solid rgba(255,255,255,.95);
+      border-radius: 8px;
+      background: rgba(28,55,42,.82);
+      box-shadow: 0 1px 4px rgba(0,0,0,.4);
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .pump-progress-fill { width: 0; height: 100%; border-radius: inherit; background: #45d15f; transition: width .18s ease; }
+    .pump-progress-label { position: absolute; right: 3px; bottom: 10px; color: #fff; font: 700 11px/1 sans-serif; text-shadow: 0 1px 3px #14251b; }
+    .craft-progress { position: fixed; z-index: 1000; display: none; height: 10px; border: 1px solid #fff; border-radius: 8px; background: rgba(28,55,42,.86); box-shadow: 0 1px 4px rgba(0,0,0,.4); pointer-events: none; overflow: hidden; }
+    .craft-progress.visible { display: block; }
+    .craft-progress-fill { width: 0; height: 100%; border-radius: inherit; background: #45d15f; transition: width .2s linear; }
+    .craft-progress-label { position: absolute; right: 3px; bottom: 11px; color: #fff; font: 700 11px/1 sans-serif; text-shadow: 0 1px 3px #14251b; }
+    .game-card.coin {
+      right: 10vw;
+      top: 66vh;
+      width: calc(var(--card-height) * 1.05);
+      height: calc(var(--card-height) * .9);
+    }
+    .game-instructions {
+      position: absolute;
+      z-index: 2;
+      right: 22px;
+      bottom: 18px;
+      margin: 0;
+      padding: 8px 12px;
+      border: 2px solid rgba(255, 247, 231, .9);
+      border-radius: 10px;
+      background: rgba(43, 94, 82, .78);
+      color: #fff7e7;
+      font-size: 13px;
+      font-weight: 800;
+      pointer-events: none;
+    }
+    .stack-notice {
+      position: absolute;
+      z-index: 21;
+      top: 68px;
+      right: 22px;
+      max-width: min(420px, 72vw);
+      margin: 0;
+      padding: 10px 15px;
+      border: 3px solid #fff7e7;
+      border-radius: 12px;
+      background: rgba(43, 94, 82, .94);
+      color: #fff7e7;
+      font-weight: 900;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity .16s ease, transform .16s ease;
+      pointer-events: none;
+    }
+    .stack-notice.visible { opacity: 1; transform: translateY(0); }
+    @media (max-width: 640px) {
+      .game-screen { --card-height: clamp(106px, 16vh, 138px); }
+      .mission-panel { top: 56px; left: 8px; width: clamp(120px, 31vw, 175px); height: auto; max-height: calc(100vh - 72px); }
+      .ingredient-stack { top: 22vh; left: 43vw; }
+      .game-card.whisk { left: 34vw; top: 70vh; }
+      .game-card.pump { left: 70vw; top: 25vh; }
+      .game-card.coin { left: auto; right: 14px; top: 70vh; }
+      .game-toolbar { top: 11px; right: 12px; gap: 7px; }
+      .stack-notice { top: 58px; right: 12px; }
+      .game-name, .back-to-menu { padding: 8px 10px; font-size: 12px; }
+      .game-instructions { right: 10px; bottom: 10px; max-width: 48vw; font-size: 11px; }
+    }
     @media (max-width: 640px) {
       .frame { min-height: 560px; padding: 32px 20px; }
       .menu { grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(390px, 100%); gap: 18px 28px; }
@@ -195,7 +352,7 @@
   </style>
 </head>
 <body>
-  <main class="frame" aria-label="Menu chính Bếp Bài">
+  <main class="frame" id="menuScreen" aria-label="Menu chính Bếp Bài">
     <header class="brand">
       <img class="logo" src="model game/UI va bieu tuong/logo_trang_chu_cookard.png" alt="Logo Cookard">
       <p class="subtitle">Bếp bài · Quán nhỏ, món ngon</p>
@@ -220,6 +377,26 @@
     <p class="hint">Chọn một thẻ để vào bếp</p>
   </main>
 
+  <section class="game-screen" id="gameScreen" aria-label="Màn chơi">
+    <img class="mission-panel" src="model game/UI va bieu tuong/bang_nhiem_vu.png" alt="Bảng nhiệm vụ">
+    <div class="game-toolbar">
+      <span class="game-name">BẾP BÀI</span>
+      <button class="back-to-menu" id="backToMenu" type="button">← Menu</button>
+    </div>
+    <p class="stack-notice" id="stackNotice" aria-live="polite"></p>
+    <div class="ingredient-stack" aria-label="Các nguyên liệu xếp chồng">
+      <img class="game-card" src="model game/Nguyen lieu/bot_mi.png" alt="Thẻ bột mì" draggable="false" tabindex="0">
+      <img class="game-card" src="model game/Nguyen lieu/mat_ong_the_nguyen_lieu.png" alt="Thẻ mật ong" draggable="false" tabindex="0">
+      <img class="game-card" src="model game/Nguyen lieu/trung_the_nguyen_lieu.png" alt="Thẻ trứng" draggable="false" tabindex="0">
+    </div>
+    <img class="game-card whisk" src="model game/Do dung bep/cay_danh_trung.png" alt="Thẻ cây đánh trứng" draggable="false" tabindex="0">
+    <img class="game-card pump" src="model game/Do dung bep/bom_nuoc.png" alt="Thẻ bơm nước" draggable="false" tabindex="0">
+    <div class="pump-progress" id="pumpProgress" aria-label="Tiến độ bơm nước"><div class="pump-progress-fill" id="pumpProgressFill"></div><span class="pump-progress-label" id="pumpProgressLabel">0%</span></div>
+    <div class="craft-progress" id="craftProgress" aria-label="Tiến độ làm bánh"><div class="craft-progress-fill" id="craftProgressFill"></div><span class="craft-progress-label" id="craftProgressLabel">0%</span></div>
+    <img class="game-card coin" src="model game/Khac/the_tien_xu.png" alt="Thẻ tiền xu" draggable="false" tabindex="0">
+    <p class="game-instructions">Thả thẻ lên thẻ khác để liên kết · kéo nhóm để di chuyển cùng nhau</p>
+  </section>
+
   <div class="modal-backdrop" id="modalBackdrop" role="presentation">
     <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <h2 id="modalTitle"></h2>
@@ -232,6 +409,8 @@
     const title = document.querySelector('#modalTitle');
     const content = document.querySelector('#modalContent');
     const status = document.querySelector('#status');
+    const menuScreen = document.querySelector('#menuScreen');
+    const gameScreen = document.querySelector('#gameScreen');
     const closeModal = () => backdrop.classList.remove('open');
     const openModal = (heading, body) => {
       title.textContent = heading;
@@ -243,7 +422,10 @@
       button.addEventListener('click', () => {
         const action = button.dataset.action;
         if (action === 'start') {
-          openModal('Bếp đã sẵn sàng!', '<p>Hãy chuẩn bị nguyên liệu, kết hợp thẻ và phục vụ vị khách đầu tiên.</p><p><strong>Chúc bạn nấu vui vẻ!</strong></p>');
+          menuScreen.classList.add('hidden');
+          gameScreen.classList.add('active');
+          requestAnimationFrame(syncPumpProgress);
+          document.querySelector('#backToMenu').focus();
         } else if (action === 'settings') {
           openModal('Cài đặt', '<div class="setting-row"><span>Âm thanh</span><img src="model game/UI va bieu tuong/nut_am_thanh.png" alt="Biểu tượng âm thanh"></div><div class="setting-row"><span>Ngôn ngữ</span><img src="model game/UI va bieu tuong/nut_ngon_ngu.png" alt="Biểu tượng ngôn ngữ"></div><p>Giao diện hiện đang dùng tiếng Việt.</p>');
         } else if (action === 'wishlist') {
@@ -254,6 +436,259 @@
       });
     });
     document.querySelector('#closeModal').addEventListener('click', closeModal);
+    document.querySelector('#backToMenu').addEventListener('click', () => {
+      gameScreen.classList.remove('active');
+      menuScreen.classList.remove('hidden');
+      document.querySelector('[data-action="start"]').focus();
+    });
+    let highestCard = 10;
+    let nextGroupId = 1;
+    let activeDrag = null;
+    let noticeTimer = null;
+    let allCards = [...document.querySelectorAll('.game-card')];
+    allCards.forEach(card => { card.dataset.group = `group-${nextGroupId++}`; });
+    const getGroupCards = groupId => allCards.filter(card => card.dataset.group === groupId);
+    const getStackOrder = cards => [...cards].sort((a, b) => Number(a.style.zIndex || 0) - Number(b.style.zIndex || 0));
+    const pumpCard = document.querySelector('.game-card.pump');
+    const pumpProgress = document.querySelector('#pumpProgress');
+    const pumpProgressFill = document.querySelector('#pumpProgressFill');
+    const pumpProgressLabel = document.querySelector('#pumpProgressLabel');
+    let pumpUses = 0;
+    let craftTimer = null;
+    let craftProgressValue = 0;
+    let crafting = false;
+    const craftProgress = document.querySelector('#craftProgress');
+    const craftProgressFill = document.querySelector('#craftProgressFill');
+    const craftProgressLabel = document.querySelector('#craftProgressLabel');
+    const isCard = (card, filename) => decodeURIComponent(card.src).endsWith(`/${filename}`);
+    const syncPumpProgress = () => {
+      const rect = pumpCard.getBoundingClientRect();
+      pumpProgress.style.left = `${rect.left + rect.width * .12}px`;
+      pumpProgress.style.top = `${rect.bottom - rect.height * .2}px`;
+      pumpProgress.style.width = `${rect.width * .76}px`;
+      pumpProgress.style.zIndex = String(Number(pumpCard.style.zIndex || 1) + 1);
+    };
+    const setPumpProgress = () => {
+      const percent = pumpUses * 25;
+      pumpProgressFill.style.width = `${percent}%`;
+      pumpProgressLabel.textContent = `${percent}%`;
+      syncPumpProgress();
+    };
+    const syncCraftProgress = () => {
+      const whisk = allCards.find(card => isCard(card, 'cay_danh_trung.png'));
+      if (!whisk) return;
+      const rect = whisk.getBoundingClientRect();
+      craftProgress.style.left = `${rect.left + rect.width * .12}px`;
+      craftProgress.style.top = `${rect.bottom - rect.height * .2}px`;
+      craftProgress.style.width = `${rect.width * .76}px`;
+      craftProgress.style.zIndex = String(Number(whisk.style.zIndex || 1) + 1);
+    };
+    const hasBreadRecipe = groupId => {
+      const cards = getGroupCards(groupId);
+      return cards.some(card => isCard(card, 'bot_mi.png')) &&
+        cards.some(card => isCard(card, 'nuoc_the_nguyen_lieu.png')) &&
+        cards.some(card => isCard(card, 'cay_danh_trung.png'));
+    };
+    const startBreadCraft = groupId => {
+      if (crafting || !hasBreadRecipe(groupId)) return;
+      crafting = true;
+      craftProgressValue = 0;
+      craftProgressFill.style.width = '0%';
+      craftProgressLabel.textContent = '0%';
+      craftProgress.classList.add('visible');
+      syncCraftProgress();
+      craftTimer = setInterval(() => {
+        craftProgressValue += 25;
+        craftProgressFill.style.width = `${craftProgressValue}%`;
+        craftProgressLabel.textContent = `${craftProgressValue}%`;
+        syncCraftProgress();
+        if (craftProgressValue >= 100) {
+          clearInterval(craftTimer);
+          craftTimer = null;
+          finishBreadCraft(groupId);
+        }
+      }, 250);
+    };
+    const finishBreadCraft = groupId => {
+      const group = getGroupCards(groupId);
+      const whisk = group.find(card => isCard(card, 'cay_danh_trung.png'));
+      const flour = group.find(card => isCard(card, 'bot_mi.png'));
+      const water = group.find(card => isCard(card, 'nuoc_the_nguyen_lieu.png'));
+      if (!whisk || !flour || !water) {
+        crafting = false;
+        craftProgress.classList.remove('visible');
+        return;
+      }
+      const rect = whisk.getBoundingClientRect();
+      [flour, water].forEach(card => {
+        card.remove();
+        allCards = allCards.filter(item => item !== card);
+      });
+      const remainingCards = getGroupCards(groupId).filter(card => card !== whisk);
+      if (remainingCards.length === 1) remainingCards[0].classList.remove('linked');
+      whisk.dataset.group = `group-${nextGroupId++}`;
+      whisk.classList.remove('linked');
+      const bread = document.createElement('img');
+      bread.className = 'game-card linked';
+      bread.src = 'model game/Mon an/banh_mi_baguette.png';
+      bread.alt = 'Thẻ bánh mì baguette';
+      bread.draggable = false;
+      bread.tabIndex = 0;
+      bread.dataset.group = whisk.dataset.group;
+      bread.style.position = 'fixed';
+      bread.style.left = `${rect.left}px`;
+      bread.style.top = `${rect.top}px`;
+      bread.style.zIndex = String(++highestCard);
+      whisk.classList.add('linked');
+      document.querySelector('#gameScreen').append(bread);
+      allCards.push(bread);
+      bindCardDrag(bread);
+      craftProgress.classList.remove('visible');
+      crafting = false;
+      showStackNotice('Đã làm xong bánh mì baguette');
+    };
+    const showStackNotice = message => {
+      const notice = document.querySelector('#stackNotice');
+      notice.textContent = message;
+      notice.classList.add('visible');
+      clearTimeout(noticeTimer);
+      noticeTimer = setTimeout(() => notice.classList.remove('visible'), 2400);
+    };
+    const mergeGroups = (movingGroupId, targetCard) => {
+      const targetGroupId = targetCard.dataset.group;
+      if (!targetGroupId || targetGroupId === movingGroupId) return;
+      const baseRect = targetCard.getBoundingClientRect();
+      const targetCards = getGroupCards(targetGroupId);
+      const movingCards = getGroupCards(movingGroupId);
+      const mergedCards = [...targetCards, ...movingCards];
+      const mergedGroupId = `group-${nextGroupId++}`;
+      const offset = Math.max(18, Math.round(targetCard.getBoundingClientRect().height * .2));
+      mergedCards.forEach((member, index) => {
+        member.dataset.group = mergedGroupId;
+        member.style.position = 'fixed';
+        member.style.left = `${baseRect.left}px`;
+        member.style.top = `${baseRect.top + offset * index}px`;
+        member.style.zIndex = String(++highestCard);
+        member.classList.add('linked');
+      });
+      showStackNotice(`Đã liên kết ${mergedCards.length} thẻ · kéo một thẻ để di chuyển cả nhóm`);
+      startBreadCraft(mergedGroupId);
+    };
+    const createWaterCard = () => {
+      const card = document.createElement('img');
+      card.className = 'game-card water-card';
+      card.src = 'model game/Nguyen lieu/nuoc_the_nguyen_lieu.png';
+      card.alt = 'Thẻ nước';
+      card.draggable = false;
+      card.tabIndex = 0;
+      card.dataset.group = `group-${nextGroupId++}`;
+      const rect = pumpCard.getBoundingClientRect();
+      card.style.position = 'fixed';
+      card.style.left = `${rect.left}px`;
+      card.style.top = `${rect.top}px`;
+      card.style.zIndex = String(++highestCard);
+      document.querySelector('#gameScreen').append(card);
+      allCards.push(card);
+      bindCardDrag(card);
+      mergeGroups(card.dataset.group, pumpCard);
+    };
+    const usePump = () => {
+      pumpUses++;
+      if (pumpUses >= 4) {
+        pumpUses = 0;
+        setPumpProgress();
+        createWaterCard();
+        showStackNotice('Đã bơm đầy nước · nhận được 1 thẻ nước');
+      } else {
+        setPumpProgress();
+      }
+    };
+    const finishDrag = (card, event, canMerge) => {
+      if (!activeDrag || activeDrag.anchor !== card) return;
+      const drag = activeDrag;
+      activeDrag = null;
+      drag.members.forEach(member => {
+        member.classList.remove('dragging');
+        member.style.pointerEvents = canMerge && drag.moved ? 'none' : '';
+      });
+      if (canMerge && drag.moved) {
+        const underPointer = document.elementFromPoint(event.clientX, event.clientY);
+        const targetCard = underPointer?.closest?.('.game-card');
+        drag.members.forEach(member => { member.style.pointerEvents = ''; });
+        if (targetCard && !drag.members.includes(targetCard)) mergeGroups(drag.groupId, targetCard);
+      }
+    };
+    function bindCardDrag(card) {
+      card.addEventListener('pointerdown', event => {
+        if (!gameScreen.classList.contains('active') || activeDrag) return;
+        event.preventDefault();
+        const bounds = card.getBoundingClientRect();
+        const groupId = card.dataset.group;
+        let members = getGroupCards(groupId);
+        // The visually top card can be pulled free; grabbing any lower card moves the stack.
+        if (members.length > 1 && getStackOrder(members).at(-1) === card) {
+          members = members.filter(member => member !== card);
+          const remainingGroupId = `group-${nextGroupId++}`;
+          members.forEach(member => { member.dataset.group = remainingGroupId; });
+          const detachedGroupId = `group-${nextGroupId++}`;
+          card.dataset.group = detachedGroupId;
+          card.classList.remove('linked');
+          if (members.length === 1) members[0].classList.remove('linked');
+          showStackNotice('Thẻ trên cùng đã được tách khỏi chồng');
+        }
+        const dragGroupId = card.dataset.group;
+        if (!members.includes(card)) members = [card];
+        else members = getGroupCards(dragGroupId);
+        const offsets = members.map(member => {
+          const rect = member.getBoundingClientRect();
+          member.style.position = 'fixed';
+          member.style.left = `${rect.left}px`;
+          member.style.top = `${rect.top}px`;
+          member.style.zIndex = String(++highestCard);
+          member.classList.add('dragging');
+          return { member, x: rect.left - bounds.left, y: rect.top - bounds.top, width: rect.width, height: rect.height };
+        });
+        activeDrag = {
+          anchor: card,
+          groupId: dragGroupId,
+          members,
+          offsets,
+          grabX: event.clientX - bounds.left,
+          grabY: event.clientY - bounds.top,
+          startX: event.clientX,
+          startY: event.clientY,
+          moved: false,
+        };
+        card.setPointerCapture(event.pointerId);
+      });
+      card.addEventListener('pointermove', event => {
+        if (!activeDrag || activeDrag.anchor !== card) return;
+        const dx = event.clientX - activeDrag.startX;
+        const dy = event.clientY - activeDrag.startY;
+        if (Math.abs(dx) + Math.abs(dy) > 5) activeDrag.moved = true;
+        const minX = Math.min(...activeDrag.offsets.map(item => item.x));
+        const minY = Math.min(...activeDrag.offsets.map(item => item.y));
+        const maxX = Math.max(...activeDrag.offsets.map(item => item.x + item.width));
+        const maxY = Math.max(...activeDrag.offsets.map(item => item.y + item.height));
+        const left = Math.max(-minX, Math.min(window.innerWidth - maxX, event.clientX - activeDrag.grabX));
+        const top = Math.max(-minY, Math.min(window.innerHeight - maxY, event.clientY - activeDrag.grabY));
+        activeDrag.offsets.forEach(({ member, x, y }) => {
+          member.style.left = `${left + x}px`;
+          member.style.top = `${top + y}px`;
+        });
+        if (activeDrag.members.includes(pumpCard)) syncPumpProgress();
+        if (activeDrag.members.some(member => isCard(member, 'cay_danh_trung.png'))) syncCraftProgress();
+      });
+      card.addEventListener('pointerup', event => {
+        const wasClick = activeDrag?.anchor === card && !activeDrag.moved;
+        finishDrag(card, event, true);
+        if (card === pumpCard && wasClick && gameScreen.classList.contains('active')) usePump();
+      });
+      card.addEventListener('pointercancel', event => finishDrag(card, event, false));
+      card.addEventListener('dragstart', event => event.preventDefault());
+    }
+    allCards.forEach(bindCardDrag);
+    window.addEventListener('resize', () => { syncPumpProgress(); syncCraftProgress(); });
     backdrop.addEventListener('click', event => { if (event.target === backdrop) closeModal(); });
     document.addEventListener('keydown', event => { if (event.key === 'Escape') closeModal(); });
   </script>
